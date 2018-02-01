@@ -15,29 +15,15 @@ function getLetters() {
 
   for (i = 0; i < currentWord.length; i++) {
     currentWordArray.push(currentWord.charAt(i));
-  }
-
-  for (i = 0; i < currentWordArray.length; i++) {
     blanksArray.push('_');
   }
 
 }
 
-getLetters();
+// getLetters();
 // Test - it works!
- console.log(currentWordArray.join(' '));
- console.log(blanksArray.join(' '));
-
-
-
-
-// START GAME
-document.onkeyup = function () {
-  hangmanGame();
-  document.getElementById("guesses-remaining").innerHTML = remainingGuesses;
-  document.getElementById("wins").innerHTML = wins;
-  document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
-}
+//  console.log(currentWordArray.join(' '));
+//  console.log(blanksArray.join(' '));
 
 // RUN GAME
 function hangmanGame() {
@@ -50,11 +36,22 @@ function hangmanGame() {
       if (userGuess === currentWordArray[i]) {
         blanksArray.splice(i, 1, currentWordArray[i]);
         document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
-      } else {
-        alreadyGuessed.push(userGuess);
-        document.getElementById("already-guessed").innerHTML = alreadyGuessed.join(', ');
       }
 
+      // not working:
+      // else {
+      //   alreadyGuessed.push(userGuess);
+      //   document.getElementById("already-guessed").innerHTML = alreadyGuessed.join(', ');
+      // }
+
+      // put something like:
+        // if (arrayName.includes(userGuess);) {
+        //   move letter to Already Guessed Array
+        // }
+
+    }
+    if (currentWordArray.includes(userGuess) {
+      
     }
 
     remainingGuesses--;
@@ -64,4 +61,13 @@ function hangmanGame() {
   // call the function:
   getLetters();
 
+}
+
+
+// START GAME
+document.onkeyup = function () {
+  hangmanGame();
+  document.getElementById("guesses-remaining").innerHTML = remainingGuesses;
+  document.getElementById("wins").innerHTML = wins;
+  document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
 }
