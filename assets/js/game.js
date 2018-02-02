@@ -2,6 +2,7 @@
 var words = ["soundgarden", "beastie boys", "alice in chains", "pink floyd", "monster magnet", "tool", "nirvana", "live", "morcheeba", "beck", "modest mouse"];
 var letterNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
 var currentWord;
+var currentWordIndex;
 var currentWordArray = [];
 var displayLoss = [];
 var blanksArray = [];
@@ -41,7 +42,9 @@ function reset() {
 // This function sets the currentWord variable, pushes each letter into the currentWordArray, and puts a blank into blanksArray for each letter, joining them into one string for display in the html:
 function getLetters() {
 
-  currentWord = words[Math.floor(Math.random() * words.length)];
+  currentWordIndex = Math.floor(Math.random() * words.length)
+
+  currentWord = words[currentWordIndex];
 
   for (i = 0; i < currentWord.length; i++) {
 
@@ -58,11 +61,9 @@ function getLetters() {
     if (currentWord.charAt(i) === " ") {
       numDashes++;
     }
-    // console.log(currentWordArray.join(" "));
+
   }
-
 }
-
 
 // This is the main game function
 function hangmanGame() {
@@ -91,14 +92,12 @@ function hangmanGame() {
     }
 
     for (i = 0; i < currentWordArray.length; i++) {
-      if (letterNumbers.includes(userGuess)) {
-        if (userGuess === currentWordArray[i]) {
-          blanksArray.splice(i, 1, currentWordArray[i]);
-          // the next line is necessary to prevent a win by pressing the same correct guess over and over again.
-          currentWordArray.splice(i, 1, "0");
-          document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
-          remainingCorrectGuesses--;
-        }
+      if (letterNumbers.includes(userGuess) && userGuess === currentWordArray[i]) {
+        blanksArray.splice(i, 1, currentWordArray[i]);
+        // the next line is necessary to prevent a win by pressing the same correct guess over and over again.
+        currentWordArray.splice(i, 1, "0");
+        document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
+        remainingCorrectGuesses--;
       }
     }
 
@@ -111,10 +110,7 @@ function hangmanGame() {
         reset();
         newGame();
       }
-      // console.log(words[0]);
-    }
-
-    if (remainingWrongGuesses === 0) {
+    } else if (remainingWrongGuesses === 0) {
       losses++;
       document.getElementById("losses").innerHTML = losses;
       document.getElementById("game-outcome").innerHTML = "YOU LOSE!";
@@ -124,17 +120,19 @@ function hangmanGame() {
         reset();
         newGame();
       }
-      // console.log(words[0]);
     }
 
     document.getElementById("guesses-remaining").innerHTML = remainingWrongGuesses;
     document.getElementById("already-guessed").innerHTML = alreadyGuessed.join(', ');
+
   }
-
 }
-
 
 // This starts the game
 document.onkeyup = function () {
   newGame();
 }
+
+
+// NEXT:
+// See if embedding the videos in the HTML with display: none and then triggering display: block makes it easier to autoplay. You can test this quickly by triggering wins and losses to just one video.

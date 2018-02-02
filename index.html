@@ -12,31 +12,38 @@
   <h1>Hangman</h1>
   <h2>90s Style</h2>
 
-  <div class="game-console">
+    <div class="game-console">
     <div><h5 id="game-outcome"></h5></div>
     <p id="game-begin">
       Press any key to begin.
     </p>
 
     <div id="game-content">
+
       <p>Wins: <span id="wins"></span></p>
+
       <p>Losses: <span id="losses"></span></p>
+
       <p>
         Current Word:
       </p>
       <!-- use class="game-data" to define height and widths for an empty div to hold space for the data to appear once the game begins -->
       <p class="game-data" id="word-blanks"></p>
-      <p>
-        Incorrect Guesses Remaining: <span id="guesses-remaining"></span>
-      </p>
+
+      <p>Incorrect Guesses Remaining: <span id="guesses-remaining"></span></p>
+
       <p>
         Letters Already Guessed:
       </p>
+
       <p class="game-data" id="already-guessed"></p>
 
     </div>
 
   </div>
+
+  <div id="play-video"></div>
+
   <script src="assets/js/game.js"></script>
 </body>
 

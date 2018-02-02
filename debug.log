@@ -1,3 +1,6 @@
 [0201/215047.771:ERROR:process_info.cc(632)] range at 0xb8d534d000000000, size 0x265 fully unreadable
 [0201/215047.771:ERROR:process_info.cc(632)] range at 0xb8d5353800000000, size 0x265 fully unreadable
 [0201/215047.771:ERROR:process_info.cc(632)] range at 0x0, size 0x265 fully unreadable
+[0201/215421.552:ERROR:process_info.cc(632)] range at 0x982e34d000000000, size 0x28a fully unreadable
+[0201/215421.552:ERROR:process_info.cc(632)] range at 0x982e353800000000, size 0x28a fully unreadable
+[0201/215421.552:ERROR:process_info.cc(632)] range at 0x0, size 0x28a fully unreadable
