@@ -6,43 +6,200 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Hangman</title>
+  <link href="https://fonts.googleapis.com/css?family=Caudex|Itim" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-  <h1>Hangman</h1>
-  <h2>90s Style</h2>
+  <div class="grid-container">
+    <div class="header">
+      <header>
+        <h1>Hangman</h1>
+        <h2>(My) Music of the 90s Edition</h2>
+        <h3 class="h3-left">This music isn't all from the 90s...</h3>
+        <h3 class="h3-right">...but I liked all of it in the 90s</h3>
+        <p id="game-begin">
+          Press any key to begin
+        </p>
+      </header>
+    </div>
 
     <div class="game-console">
-    <div><h5 id="game-outcome"></h5></div>
-    <p id="game-begin">
-      Press any key to begin.
-    </p>
 
-    <div id="game-content">
+      <div>
+        <h6 id="game-outcome"></h6>
+      </div>
 
-      <p>Wins: <span id="wins"></span></p>
-
-      <p>Losses: <span id="losses"></span></p>
-
-      <p>
-        Current Word:
+      <p class="p-lg">Wins:
+        <span class="font-itim" id="wins">0</span>
       </p>
-      <!-- use class="game-data" to define height and widths for an empty div to hold space for the data to appear once the game begins -->
-      <p class="game-data" id="word-blanks"></p>
 
-      <p>Incorrect Guesses Remaining: <span id="guesses-remaining"></span></p>
+      <p class="p-lg">Losses:
+        <span class="font-itim" id="losses">0</span>
+      </p>
 
-      <p>
+      <p class="p-sm">Incorrect Guesses Remaining:
+        <span class="font-itim" id="guesses-remaining">0</span>
+      </p>
+
+      <p class="p-sm">
         Letters Already Guessed:
       </p>
 
-      <p class="game-data" id="already-guessed"></p>
+      <p class="game-data font-itim" id="already-guessed"></p>
 
     </div>
 
+    <div class="media-container">
+
+      <div "image-container">
+        <img id="default-image" src="assets/images/default-image.jpg" alt="hangman image">
+
+        <div class="word-image" id="alice-image">
+          <img src="assets/images/alice-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="beastie-image">
+          <img src="assets/images/beastie-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="beck-image">
+          <img src="assets/images/beck-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="dance-image">
+          <img src="assets/images/dead-can-dance-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="inxs-image">
+          <img src="assets/images/inxs-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="zeppelin-image">
+          <img src="assets/images/zeppelin-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="live-image">
+          <img src="assets/images/live-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="mouse-image">
+          <img src="assets/images/mouse-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="monster-image">
+          <img src="assets/images/monster-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="morcheeba-image">
+          <img src="assets/images/morcheeba-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="pink-image">
+          <img src="assets/images/pink-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="prince-image">
+          <img src="assets/images/prince-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="soundgarden-image">
+          <img src="assets/images/soundgarden-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="temple-image">
+
+          <img src="assets/images/temple-image.jpg" alt="hangman image">
+        </div>
+
+        <div class="word-image" id="tool-image">
+          <img src="assets/images/tool-image.jpg" alt="hangman image">
+        </div>
+      </div>
+
+      <div id="audio-container">
+        <div>
+          <audio class="audio" id="alice-audio" src="assets/audio/AIC-WhatTheHellHaveI.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="beastie-audio" src="assets/audio/Beasties-Sabotage.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="beck-audio" src="assets/audio/Beck-Scarecrow.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="dance-audio" src="assets/audio/DeadCanDance-Anabasis.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="inxs-audio" src="assets/audio/INXS-DevilInside.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="zeppelin-audio" src="assets/audio/LedZeppelin-FoolInTheRain.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="live-audio" src="assets/audio/Live-RunToTheWater.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="mouse-audio" src="assets/audio/ModestMouse-PaperThinWalls.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="monster-audio" src="assets/audio/MonsterMagnet-19Witches.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="morcheeba-audio" src="assets/audio/Morcheeba-BigCalm.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="pink-audio" src="assets/audio/PinkFloyd-Fearless.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="prince-audio" src="assets/audio/Prince-PurpleRain.mp3"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="soundgarden-audio" src="assets/audio/Soundgarden-RustyCage.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="temple-audio" src="assets/audio/TempleOfTheDog-WoodenJesus.m4a"></audio>
+        </div>
+
+        <div>
+          <audio class="audio" id="tool-audio" src="assets/audio/Tool-46n2.m4a"></audio>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="word-console">
+      <p class="p-lg">
+        Current Word:
+      </p>
+
+      <!-- use class="game-data" to define height and widths for an empty div to hold space for the data to appear once the game begins -->
+      <p class="game-data font-itim" id="word-blanks"></p>
+
+    </div>
   </div>
 
-  <div id="play-video"></div>
+  <div class="footer">
+    <footer>
+      <p>
+        &#9400;Copyright 2018 Keith Allmon
+      </p>
+    </footer>
+  </div>
 
   <script src="assets/js/game.js"></script>
 </body>
