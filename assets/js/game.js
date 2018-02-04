@@ -16,23 +16,6 @@ var words = [
   , "temple of the dog"
   , "tool"
 ];
-var names = [
-  "Alice In Chains"
-  , "Beastie Boys"
-  , "Beck"
-  , "Dead Can Dance"
-  , "INXS"
-  , "Led Zeppelin"
-  , "Live"
-  , "Modest Mouse"
-  , "Monster Magnet"
-  , "Morcheeba"
-  , "Pink Floyd"
-  , "Prince"
-  , "Soundgarden"
-  , "Temple of the Dog"
-  , "TooL"
-];
 var audio = [
   "alice-audio"
   , "beastie-audio"
@@ -67,14 +50,6 @@ var images = [
   , "temple-image"
   , "tool-image"
 ];
-var currentImage =
-  "<h4>" +
-  names[currentWordIndex] +
-  "</h4>" +
-  "<img class='current-image' src='" +
-  images[currentWordIndex] +
-  " alt='hangman image'>"
-  ;
 var letterNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
 var currentWord;
 var currentWordIndex;
@@ -88,20 +63,11 @@ var losses = 0;
 var numSpaces = 0;
 var remainingCorrectGuesses;
 var remainingWrongGuesses = 7;
+var usedWords = [];
 
-// This function sets the initial conditions of each game and runs the game functions
-function newGame() {
-  getLetters();
-  hangmanGame();
-  remainingCorrectGuesses = currentWordArray.length - numSpaces;
-  document.getElementById("game-outcome").innerHTML = "";
-  document.getElementById("game-begin").style.animation = "none";
-  document.getElementById("game-begin").innerHTML = "Good Luck!";
-  document.getElementById("guesses-remaining").innerHTML = remainingWrongGuesses;
-  document.getElementById("wins").innerHTML = wins;
-  document.getElementById("losses").innerHTML = losses;
-  document.getElementById("word-blanks").innerHTML = blanksArray.join(' ')
-  document.getElementById("already-guessed").innerHTML = "";
+function assignWord() {
+  currentWordIndex = Math.floor(Math.random() * words.length);
+  currentWord = words[currentWordIndex];
 }
 
 //This function resets the arrays after each game
@@ -116,32 +82,63 @@ function reset() {
   document.getElementById("game-outcome").style.animationIterationCount = "0";
 }
 
-// This function sets the currentWord variable, pushes each letter into the currentWordArray, and puts a blank into blanksArray for each letter, joining them into one string for display in the html:
-function getLetters() {
-
-  currentWordIndex = Math.floor(Math.random() * words.length)
-
-  currentWord = words[currentWordIndex];
-
-  for (i = 0; i < currentWord.length; i++) {
-
-    if (letterNumbers.includes(currentWord.charAt(i))) {
-      currentWordArray.push(currentWord.charAt(i));
-      displayLoss.push(currentWord.charAt(i));
-      blanksArray.push("_");
-    } else if (currentWord.charAt(i) === ' ') {
-      currentWordArray.push("&nbsp;");
-      displayLoss.push("&nbsp;");
-      blanksArray.push("&nbsp;");
-    }
-
-    if (currentWord.charAt(i) === " ") {
-      numSpaces++;
-    }
-
+function startOver() {
+  usedWords.length = 0;
+  wins = 0;
+  losses = 0;
+  document.onkeyup = function () {
+    previousWordIndex = currentWordIndex;
+    document.getElementById("default-image").style.display = "block";
+    document.getElementById(images[previousWordIndex]).style.display = "none";
+    document.getElementById(audio[previousWordIndex]).pause();
+    newGame();
   }
 }
 
+// This function sets the currentWord variable, pushes each letter into the currentWordArray, and puts a blank into blanksArray for each letter, joining them into one string for display in the html. if this turns out to not need any other items other than checkWord();, it can be deleted and replaced with checkWord();
+function checkWord() {
+  if (usedWords.includes(currentWord)) {
+    assignWord();
+    checkWord();
+  }
+  else {
+    for (i = 0; i < currentWord.length; i++) {
+
+      if (letterNumbers.includes(currentWord.charAt(i))) {
+        currentWordArray.push(currentWord.charAt(i));
+        displayLoss.push(currentWord.charAt(i));
+        blanksArray.push("_");
+      } else if (currentWord.charAt(i) === ' ') {
+        currentWordArray.push("&nbsp;");
+        displayLoss.push("&nbsp;");
+        blanksArray.push("&nbsp;");
+      }
+
+      if (currentWord.charAt(i) === " ") {
+        numSpaces++;
+      }
+
+    }
+  }
+}
+
+// This function sets the initial conditions of each game and runs the game functions
+function newGame() {
+  reset();
+  assignWord();
+  checkWord();
+  hangmanGame();
+  remainingCorrectGuesses = currentWordArray.length - numSpaces;
+  document.getElementById("game-outcome").innerHTML = "";
+  document.getElementById("game-begin").style.animation = "none";
+  document.getElementById("game-begin").innerHTML = "Good Luck!";
+  document.getElementById("game-end").innerHTML = "";
+  document.getElementById("guesses-remaining").innerHTML = remainingWrongGuesses;
+  document.getElementById("wins").innerHTML = wins;
+  document.getElementById("losses").innerHTML = losses;
+  document.getElementById("word-blanks").innerHTML = blanksArray.join(' ')
+  document.getElementById("already-guessed").innerHTML = "";
+}
 
 // This is the main game function
 function hangmanGame() {
@@ -159,12 +156,12 @@ function hangmanGame() {
 
     // Wrapped wrong guesses in an alphanumeric array checker to prevent unwanted key presses resulting in remainingWrongGuesses decrements
     if (letterNumbers.includes(userGuess)) {
-      if (alreadyGuessed.includes(userGuess)) {
+      if (alreadyGuessed.includes(userGuess.toLocaleUpperCase())) {
         //next line prevents repeated correct guesses from ending up in the alreadyGuessed array
       } else if (blanksArray.includes(userGuess)) {
 
       } else if (wrongUserGuess) {
-        alreadyGuessed.push(userGuess);
+        alreadyGuessed.push(userGuess.toLocaleUpperCase());
         remainingWrongGuesses--;
       }
     }
@@ -176,26 +173,6 @@ function hangmanGame() {
         currentWordArray.splice(i, 1, "0");
         document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
         remainingCorrectGuesses--;
-      }
-    }
-
-    if (remainingCorrectGuesses === 0 || remainingWrongGuesses === 0) {
-      if (audio[previousWordIndex]) {
-        document.getElementById(audio[previousWordIndex]).pause();
-      }
-      if (images[previousWordIndex]) {
-        document.getElementById(images[previousWordIndex]).style.display = "none";
-      }
-      document.getElementById("default-image").style.display = "none";
-      document.getElementById("game-begin").innerHTML = "Press Any Key to Play Again";
-      document.getElementById("game-begin").style.animation = "opac .8s";
-      document.getElementById("game-begin").style.animationIterationCount = "infinite";
-      document.getElementById(audio[currentWordIndex]).play();
-      document.getElementById(images[currentWordIndex]).style.display = "block";
-      document.onkeyup = function () {
-        previousWordIndex = currentWordIndex;
-        reset();
-        newGame();
       }
     }
 
@@ -214,10 +191,39 @@ function hangmanGame() {
       document.getElementById("game-outcome").style.animationIterationCount = "1";
     }
 
+    if (remainingCorrectGuesses === 0 || remainingWrongGuesses === 0) {
+      if (audio[previousWordIndex]) {
+        document.getElementById(audio[previousWordIndex]).load();
+      }
+      if (images[previousWordIndex]) {
+        document.getElementById(images[previousWordIndex]).style.display = "none";
+      }
+      document.getElementById("default-image").style.display = "none";
+      document.getElementById("game-begin").innerHTML = "Press Any Key to Play Again";
+      document.getElementById("game-begin").style.animation = "opac .8s";
+      document.getElementById("game-begin").style.animationIterationCount = "infinite";
+      document.getElementById(audio[currentWordIndex]).play();
+      document.getElementById(images[currentWordIndex]).style.display = "block";
+      usedWords.push(currentWord);
+      if (usedWords.sort().join(',') === words.sort().join(',')) {
+        document.getElementById("game-end").innerHTML = "GAME<br>OVER!";
+        document.getElementById("game-end").style.animation = "opac3 .3s";
+        document.getElementById("game-end").style.animationIterationCount = "1";
+        startOver();
+      } else {
+        console.log(usedWords);
+        document.onkeyup = function () {
+          previousWordIndex = currentWordIndex;
+          console.log(previousWordIndex);
+          newGame();
+        }
+      }
+    }
+
     document.getElementById("guesses-remaining").innerHTML = remainingWrongGuesses;
     document.getElementById("already-guessed").innerHTML = alreadyGuessed.join(', ');
 
-  }
+  };
 }
 
 // This starts the game

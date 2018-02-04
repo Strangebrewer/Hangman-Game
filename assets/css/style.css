@@ -81,7 +81,7 @@ header .h3-right {
 }
 
 .game-console {
-  grid-column: 3 / 4;
+  grid-column: 2 / 5;
   grid-row: 2;
   padding: 10px 0;
   position: relative;
@@ -136,6 +136,19 @@ header .h3-right {
   text-align: center;
 }
 
+#game-end {
+  color: #9e0000;
+  font-size: 12em;
+  font-weight: bold;
+  padding: 10px 0 20px 0;
+  position: absolute;
+  top: 180px;
+  left: 0;
+  right: 0;
+  text-shadow: 0 0 10px #fff;
+  z-index: 99;
+}
+
 .media-container img {
   box-shadow: 10px 10px 10px #333;
   margin: 30px 0;
@@ -180,9 +193,21 @@ header .h3-right {
   82.5% { opacity: 1; }
   85% { opacity: 0; }
   87.5% { opacity: 1; }
-  90% { opacity: 1; }
-  92.5% { opacity: 0; }
-  95% { opacity: 1; }
-  97.5% { opacity: 0; }
+  90% { opacity: 0; }
+  92.5% { opacity: 1; }
+  95% { opacity: 0; }
+  97.5% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes opac3 { 
+  0% { opacity: 0; }
+  12.5% { opacity: 1; }
+  25% { opacity: .1; }
+  37.5% { opacity: 1; }
+  50% { opacity: .2; }
+  62.5% { opacity: 1; }
+  75% { opacity: .4; }
+  87.5% { opacity: 1; }
   100% { opacity: 1; }
 }
