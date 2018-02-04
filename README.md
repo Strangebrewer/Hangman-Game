@@ -7,7 +7,7 @@ While the game doesn't display a stick figure man to hang, the typical hangman g
 Guesses are limited to letters and numbers - any other keys will have no effect.
 
 
-This project was quite a bit more complex than I thought it would be, but it was a fun challenge to fine tune the details once I understood how to build the basic structure. Some of the more interesting challenges were:
+This project was quite a bit more complex than I thought it would be. Each new victory in getting something to work would reveal more ambiguities in the logic further downstream, which just underscores the relentless logic of computing. It was a fun challenge to fine tune the details once I understood how to build the basic structure. Some of the more interesting challenges were:
 
 <ul>
   <li>Figuring out a way to prevent the same key from registering more than once if pressed more than once</li>
@@ -17,4 +17,4 @@ This project was quite a bit more complex than I thought it would be, but it was
   <li>Only allowing each word to be used once without removing it from the array</li>
 </ul>
 
-...and I got a good laugh when I found myself thinking of things like driving, opening my water bottle, making lunch, etc. in terms of conditionals, functions, for loops, arrays, variables, scope... I'm either going insane, or this is beginning to make sense...
+...and I got a good laugh Saturday when I found myself thinking of things like driving, opening my water bottle, making lunch, etc. in terms of conditionals, functions, loops, arrays, variables, scope... I'm either going insane, or this is beginning to make sense...
