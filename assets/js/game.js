@@ -50,52 +50,27 @@ var images = [
   , "temple-image"
   , "tool-image"
 ];
-var letterNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
-var currentWord;
-var currentWordIndex;
-var currentWordArray = [];
-var previousWordIndex;
-var displayLoss = [];
-var blanksArray = [];
 var alreadyGuessed = [];
-var wins = 0;
+var blanksArray = [];
+var currentWord;
+var currentWordArray = [];
+var currentWordIndex;
+var displayLoss = [];
+var letterNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
 var losses = 0;
 var numSpaces = 0;
+var previousWordIndex;
 var remainingCorrectGuesses;
 var remainingWrongGuesses = 6;
 var usedWords = [];
+var wins = 0;
 
 function assignWord() {
   currentWordIndex = Math.floor(Math.random() * words.length);
   currentWord = words[currentWordIndex];
 }
 
-//This function resets the arrays after each game
-function reset() {
-  currentWordArray.length = 0;
-  displayLoss.length = 0;
-  blanksArray.length = 0;
-  alreadyGuessed.length = 0;
-  remainingWrongGuesses = 6;
-  numSpaces = 0;
-  document.getElementById("game-outcome").style.animation = "none";
-  document.getElementById("game-outcome").style.animationIterationCount = "0";
-}
-
-function startOver() {
-  usedWords.length = 0;
-  wins = 0;
-  losses = 0;
-  document.onkeyup = function () {
-    previousWordIndex = currentWordIndex;
-    document.getElementById("default-image").style.display = "block";
-    document.getElementById(images[previousWordIndex]).style.display = "none";
-    document.getElementById(audio[previousWordIndex]).pause();
-    newGame();
-  }
-}
-
-// This function sets the currentWord variable, pushes each letter into the currentWordArray, and puts a blank into blanksArray for each letter, joining them into one string for display in the html. if this turns out to not need any other items other than checkWord();, it can be deleted and replaced with checkWord();
+// This function checks if the current word has already been used. If it has, it runs assignWord again; if not, it pushes each letter into the currentWordArray, and puts a blank into blanksArray for each letter, joining them into one string for display in the html.
 function checkWord() {
   if (usedWords.includes(currentWord)) {
     assignWord();
@@ -122,7 +97,33 @@ function checkWord() {
   }
 }
 
-// This function sets the initial conditions of each game and runs the game functions
+// Resets the arrays after each game
+function reset() {
+  currentWordArray.length = 0;
+  displayLoss.length = 0;
+  blanksArray.length = 0;
+  alreadyGuessed.length = 0;
+  remainingWrongGuesses = 6;
+  numSpaces = 0;
+  document.getElementById("game-outcome").style.animation = "none";
+  document.getElementById("game-outcome").style.animationIterationCount = "0";
+}
+
+// Once all words have been used, this reset allows everything to start over.
+function startOver() {
+  usedWords.length = 0;
+  wins = 0;
+  losses = 0;
+  document.onkeyup = function () {
+    previousWordIndex = currentWordIndex;
+    document.getElementById("default-image").style.display = "block";
+    document.getElementById(images[previousWordIndex]).style.display = "none";
+    document.getElementById(audio[previousWordIndex]).pause();
+    newGame();
+  }
+}
+
+// Set the initial conditions of each game and runs the game functions
 function newGame() {
   reset();
   assignWord();
@@ -140,7 +141,7 @@ function newGame() {
   document.getElementById("already-guessed").innerHTML = "";
 }
 
-// This is the main game function
+// Main game function
 function hangmanGame() {
 
   document.onkeyup = function (event) {
@@ -169,8 +170,8 @@ function hangmanGame() {
     for (i = 0; i < currentWordArray.length; i++) {
       if (letterNumbers.includes(userGuess) && userGuess === currentWordArray[i]) {
         blanksArray.splice(i, 1, currentWordArray[i]);
-        // the next line is necessary to prevent a win by pressing the same correct guess over and over again - because after it's been guessed, it's replaced in the array with a "0", and from that point on it won't decrement remainingCorrectGuesses.
-        currentWordArray.splice(i, 1, "0");
+        // the next line is necessary to prevent a win by pressing the same correct guess over and over again - because after it's been guessed, it's replaced in the array with a "#", and from that point on it won't decrement remainingCorrectGuesses.
+        currentWordArray.splice(i, 1, "#");
         document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
         remainingCorrectGuesses--;
       }
@@ -180,18 +181,15 @@ function hangmanGame() {
       wins++;
       document.getElementById("wins").innerHTML = wins;
       document.getElementById("game-outcome").innerHTML = "YOU WON!";
-      document.getElementById("game-outcome").style.animation = "opac2 1.5s";
-      document.getElementById("game-outcome").style.animationIterationCount = "1";
     } else if (remainingWrongGuesses === 0) {
       losses++;
       document.getElementById("losses").innerHTML = losses;
       document.getElementById("game-outcome").innerHTML = "YOU LOST!";
       document.getElementById("word-blanks").innerHTML = displayLoss.join(' ');
-      document.getElementById("game-outcome").style.animation = "opac2 1.5s";
-      document.getElementById("game-outcome").style.animationIterationCount = "1";
     }
 
     if (remainingCorrectGuesses === 0 || remainingWrongGuesses === 0) {
+      // The next two document.getElement... have to be wrapped in if statements because there won't be a previousWordIndex for the first game, which will prevent the rest of this code from running
       if (audio[previousWordIndex]) {
         document.getElementById(audio[previousWordIndex]).load();
       }
@@ -199,6 +197,8 @@ function hangmanGame() {
         document.getElementById(images[previousWordIndex]).style.display = "none";
       }
       document.getElementById("default-image").style.display = "none";
+      document.getElementById("game-outcome").style.animation = "opac2 1.5s";
+      document.getElementById("game-outcome").style.animationIterationCount = "1";
       document.getElementById("game-begin").innerHTML = "Press Any Key to Play Again";
       document.getElementById("game-begin").style.animation = "opac .8s";
       document.getElementById("game-begin").style.animationIterationCount = "infinite";
@@ -211,10 +211,8 @@ function hangmanGame() {
         document.getElementById("game-end").style.animationIterationCount = "1";
         startOver();
       } else {
-        console.log(usedWords);
         document.onkeyup = function () {
           previousWordIndex = currentWordIndex;
-          console.log(previousWordIndex);
           newGame();
         }
       }
@@ -226,7 +224,7 @@ function hangmanGame() {
   };
 }
 
-// This starts the game
+// This starts the first game
 document.onkeyup = function () {
   newGame();
 }
