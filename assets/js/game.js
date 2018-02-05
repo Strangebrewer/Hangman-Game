@@ -97,7 +97,7 @@ function checkWord() {
   }
 }
 
-// Resets the arrays after each game
+// Resets the arrays after each round
 function reset() {
   currentWordArray.length = 0;
   displayLoss.length = 0;
@@ -123,7 +123,7 @@ function startOver() {
   }
 }
 
-// Set the initial conditions of each game and runs the game functions
+// Set the initial conditions of each round, calls the game functions, and displays the game html
 function newGame() {
   reset();
   assignWord();
@@ -174,6 +174,7 @@ function hangmanGame() {
         currentWordArray.splice(i, 1, "#");
         document.getElementById("word-blanks").innerHTML = blanksArray.join(' ');
         remainingCorrectGuesses--;
+        console.log(currentWordArray);
       }
     }
 
@@ -189,7 +190,7 @@ function hangmanGame() {
     }
 
     if (remainingCorrectGuesses === 0 || remainingWrongGuesses === 0) {
-      // The next two document.getElement... have to be wrapped in if statements because there won't be a previousWordIndex for the first game, which will prevent the rest of this code from running
+      // The next two document.getElement... have to be wrapped in conditionals because there won't be a previousWordIndex for the first game, which will prevent the rest of this code from running
       if (audio[previousWordIndex]) {
         document.getElementById(audio[previousWordIndex]).load();
       }
