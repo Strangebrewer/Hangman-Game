@@ -1,4 +1,4 @@
-# Hangman-Game
+# Hangman
 
 My fourth homework assignment and my first JavaScript project. Each round draws from a limited list of words, and once the word list is exhausted, the game is over. The end of each round produces an image of the artist and triggers a song by the artist as well.
 
